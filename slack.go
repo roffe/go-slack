@@ -42,13 +42,7 @@ func (m *Message) Send() (string, error) {
 	}
 	r := bytes.NewReader(b)
 
-	request, err := http.NewRequest("POST", m.url, r)
-	if err != nil {
-		return "", err
-	}
-
-	client := &http.Client{}
-	resp, err := client.Do(request)
+	resp, err := http.Post(m.url, "application/json", r)
 	if err != nil {
 		return "", err
 	}
