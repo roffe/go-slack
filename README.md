@@ -1,24 +1,38 @@
 # go-slack
 
-A super minimaistic Slackchat incoming webhook client for Go
+A super minimaistic Slackchat webhook client for Go
 
 Usage:
 
 ```go
-import "github.com/roffe/go-slack"
-
+import (
+    "fmt"
+    "github.com/roffe/go-slack"
+)
 func main() {
+    webhookURL := "https://hooks.slack.com/services/..."
     msg := slack.Message{
-        Attachements: []slack.Attachment{
-            slack.Attachment{
-                Fallback: "Text message for fallback for text clients",
-                Color:    "good",
-                Text:     "This *supports* _markdown_",
-                Footer:   "send by go-slack",
+        Blocks: []slack.Block{
+            slack.Block{
+                Type: slack.Section,
+                Text: &slack.Text{
+                    Type: slack.Markdown,
+                    Text: "A part of a *message*",
+                },
+            },
+            slack.Block{
+                Type: slack.Divider,
+            },
+            slack.Block{
+                Type: slack.Section,
+                Text: &slack.Text{
+                    Type: slack.Markdown,
+                    Text: "some more text",
+                },
             },
         },
     }
-    resp, err := msg.SetURL(slackURL)
+    resp, err := msg.Send(webhookURL)
     if err != nil {
         panic(err)
     }

@@ -59,7 +59,7 @@ type Text struct {
 }
 
 // SetURL sets the webhook url
-func (m *Message) SetURL(webhookURL string) error {
+func (m *Message) setURL(webhookURL string) error {
 	parsed, err := url.Parse(webhookURL)
 	if err != nil {
 		return fmt.Errorf("Failed to parse url: %s", err)
@@ -69,7 +69,11 @@ func (m *Message) SetURL(webhookURL string) error {
 }
 
 // Send the message
-func (m *Message) Send() (string, error) {
+func (m *Message) Send(webhookURL string) (string, error) {
+	if err := m.setURL(webhookURL); err != nil {
+		return "", err
+	}
+
 	b, err := json.Marshal(m)
 	if err != nil {
 		return "", fmt.Errorf("Failed to json marshal %s", err)
