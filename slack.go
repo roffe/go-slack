@@ -16,6 +16,12 @@ const (
 	Divider = "divider"
 	// Section string
 	Section = "section"
+	// Context string
+	Context = "context"
+	// PlainText string
+	PlainText = "plain_text"
+	// Image string
+	Image = "image"
 )
 
 // Message is our slackchat message
@@ -38,10 +44,28 @@ type Attachment struct {
 
 // Block type
 type Block struct {
-	Type    string  `json:"type"`
-	Text    *Text   `json:"text,omitempty"`
-	BlockID string  `json:"block_id,omitempty"`
-	Fields  []Field `json:"fields,omitempty"`
+	Type      string     `json:"type"`
+	Text      *Text      `json:"text,omitempty"`
+	Accessory *Accessory `json:"accessory,omitempty"`
+	Elements  []*Element `json:"elements,omitempty"`
+	BlockID   string     `json:"block_id,omitempty"`
+	Fields    []Field    `json:"fields,omitempty"`
+}
+
+// Accessory type
+type Accessory struct {
+	Type     string `json:"type"`
+	ImageURL string `json:"image_url,omitempty"`
+	AltText  string `json:"alt_text,omitempty"`
+}
+
+// Element type
+type Element struct {
+	Type     string `json:"type"`
+	ImageURL string `json:"image_url,omitempty"`
+	AltText  string `json:"alt_text,omitempty"`
+	Emoji    bool   `json:"emoji,omitempty"`
+	Text     string `json:"text,omitempty"`
 }
 
 // Field type
