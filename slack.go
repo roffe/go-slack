@@ -22,6 +22,8 @@ const (
 	PlainText = "plain_text"
 	// Image string
 	Image = "image"
+	// Button type
+	Button = "button"
 )
 
 // Message is our slackchat message
@@ -50,6 +52,7 @@ type Block struct {
 	Elements  []*Element `json:"elements,omitempty"`
 	BlockID   string     `json:"block_id,omitempty"`
 	Fields    []Field    `json:"fields,omitempty"`
+	URL       string     `json:"url,omitempty"`
 }
 
 // Accessory type
