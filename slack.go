@@ -93,3 +93,8 @@ func (m *Message) Send(webhookURL string) (string, error) {
 
 	return fmt.Sprintf("%s", response), nil
 }
+
+// AddBlock to the message
+func (m *Message) AddBlock(b Block) {
+	m.Blocks = append(m.Blocks, b)
+}
