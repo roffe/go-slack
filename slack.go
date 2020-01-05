@@ -51,15 +51,16 @@ type Block struct {
 	Accessory *Accessory `json:"accessory,omitempty"`
 	Elements  []*Element `json:"elements,omitempty"`
 	BlockID   string     `json:"block_id,omitempty"`
-	Fields    []Field    `json:"fields,omitempty"`
-	URL       string     `json:"url,omitempty"`
+	Fields    []*Field   `json:"fields,omitempty"`
 }
 
 // Accessory type
 type Accessory struct {
 	Type     string `json:"type"`
 	ImageURL string `json:"image_url,omitempty"`
+	Text     *Text  `json:"text,omitempty"`
 	AltText  string `json:"alt_text,omitempty"`
+	URL      string `json:"url,omitempty"`
 }
 
 // Element type
@@ -93,6 +94,15 @@ func (m *Message) setURL(webhookURL string) error {
 	}
 	m.url = parsed.String()
 	return nil
+}
+
+// JSON outputs the json string
+func (m *Message) JSON() ([]byte, error) {
+	b, err := json.MarshalIndent(m, "", "    ")
+	if err != nil {
+		return []byte{}, fmt.Errorf("Failed to json marshal %s", err)
+	}
+	return b, nil
 }
 
 // Send the message
